@@ -121,7 +121,7 @@ public:
 		return size;
 	}
 	void print() {
-		cout << "[ ";
+		cout << "[";
 		Node<E>* temp = head->next;
 		while (temp != nullptr) {
 			cout << temp->element;
