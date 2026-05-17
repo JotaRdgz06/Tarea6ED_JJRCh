@@ -20,28 +20,31 @@ int main() {
             string tam;
             cout << "Ingrese el tamaño de la lista a ordenar: ";
             getline(cin, tam);
-            if (stoi(tam) < 2) {
+			int tamint = stoi(tam);
+            if (tamint < 2) {
                 throw runtime_error("Tamaño debe ser un entero mayor a 2");
             }
             string base;
 			cout << "Ingrese la base numerica a usar en el ordenamiento: ";
 			getline(cin, base);
-			if (stoi(base) < 2) {
+			int baseint = stoi(base);
+			if (baseint < 2) {
 				throw runtime_error("Base debe ser un entero mayor o igual a 2");
 			}
 			LinkedList<int>* lista = new LinkedList<int>();
             srand(time(0));
-            for (int i = 0; i < stoi(tam); i++) {
+            for (int i = 0; i < tamint; i++) {
                 int num = rand() % 9999;
                 lista->append(num);
             }
-			lista->print();
-        delete lista;
-			return 0;
-            
+			radixSort(lista, baseint);
         }
 	}
     catch (const exception& e) {
         cout << "Error: " << e.what() << '\n';
     }
+}
+
+void radixSort(List<int>* lista, int base) {
+
 }
