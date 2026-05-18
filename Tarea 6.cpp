@@ -1,10 +1,8 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include <random>
 #include <ctime>
 #include <cstdlib>
-#include <clocale>
 #include "LinkedList.h"
 #include "List.h"
 
@@ -20,6 +18,7 @@ int obtenerDigito(int numero, int base, int divisor);
 void radixSort(LinkedList<int>* lista, int base);
 
 int main() {
+    srand(time(0));
     setlocale(LC_ALL, "es_ES.UTF-8");
     try {
         while (true) {
@@ -27,18 +26,17 @@ int main() {
             cout << "Ingrese el tamaño de la lista a ordenar: ";
             getline(cin, tam);
             int tamint = stoi(tam);
-            if (tamint < 2) {
+            if (tamint < 2 || isalpha(tamint)) {
                 throw runtime_error("Tamaño debe ser un entero mayor a 2");
             }
             string base;
             cout << "Ingrese la base numerica a usar en el ordenamiento: ";
             getline(cin, base);
             int baseint = stoi(base);
-            if (baseint < 2) {
+            if (baseint < 2 || isalpha(baseint)) {
                 throw runtime_error("Base debe ser un entero mayor o igual a 2");
             }
             LinkedList<int>* lista = new LinkedList<int>();
-            srand(static_cast<unsigned int>(time(0)));
             for (int i = 0; i < tamint; i++) {
                 int num = rand() % 9999;
                 lista->append(num);
@@ -46,7 +44,9 @@ int main() {
             lista->goToStart();
 			int num1 = lista->getElement();
             lista->print();
-            cout << obtenerDigito(num1, baseint, 8) << endl;
+            int mayorint = obtenerMayor(lista);
+            cout << mayorint << endl;
+			cout << obtenerDigito(mayorint, baseint, 0) << endl;
             delete lista;
         }
     }
