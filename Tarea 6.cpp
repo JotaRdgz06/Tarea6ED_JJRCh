@@ -21,7 +21,8 @@ int main() {
     srand(time(0));
     setlocale(LC_ALL, "es_ES.UTF-8");
     try {
-        while (true) {
+        string seguir;
+        do {
             string tam;
             cout << "Ingrese el tamaño de la lista a ordenar: ";
             getline(cin, tam);
@@ -41,14 +42,18 @@ int main() {
                 int num = rand() % 9999;
                 lista->append(num);
             }
-            lista->goToStart();
-			int num1 = lista->getElement();
-            lista->print();
-            int mayorint = obtenerMayor(lista);
-            cout << mayorint << endl;
-			cout << obtenerDigito(mayorint, baseint, 0) << endl;
-            delete lista;
-        }
+            cout << "lista sin ordenar: " << endl;
+			lista->print();
+            cout << endl;
+			radixSort(lista, baseint);
+
+            cout << endl;
+			cout << "Desea continuar? (s/n): ";
+			getline(cin, seguir);
+			if (seguir != "s" && seguir != "S" && seguir != "n" && seguir != "N") {
+				throw runtime_error("Opción no válida, ingrese s o n.");
+			}
+        } while (seguir == "s" || seguir == "S");
     }
     catch (const exception& e) {
         cout << "Error: " << e.what() << '\n';
@@ -90,7 +95,7 @@ void radixSort(LinkedList<int>* lista, int base) {
         lista->goToStart();
         while (!lista->atEnd()) {
             int numero = lista->getElement();
-            int digito = obtenerDigito(numero, base, divisor);
+            int digito = obtenerDigito(numero, base, posicion);
             baldes[digito]->append(numero);
             lista->next();
         }
@@ -113,5 +118,7 @@ void radixSort(LinkedList<int>* lista, int base) {
         delete baldes[i];
     }
     delete[] baldes;
+	cout << "lista ordenada: " << endl;
     lista->print();
+    cout << endl;
 }
