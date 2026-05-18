@@ -12,6 +12,8 @@ using std::string;
 using std::cin;
 using std::runtime_error;
 using std::exception;
+using std::streamsize;
+using std::numeric_limits;
 
 int obtenerMayor(LinkedList<int>* lista);
 int obtenerDigito(int numero, int base, int divisor);
@@ -24,19 +26,28 @@ int main() {
         string seguir;
         do {
             string tam;
-            cout << "Ingrese el tamaño de la lista a ordenar: ";
-            getline(cin, tam);
-            int tamint = stoi(tam);
-            if (tamint < 2 || isalpha(tamint)) {
-                throw runtime_error("Tamaño debe ser un entero mayor a 2");
-            }
+            int tamint;
+            do {
+                cout << "Ingrese el tamaño de la lista a ordenar: ";
+                getline(cin, tam);
+                tamint = stoi(tam);
+                if (tamint < 2) {
+                    throw runtime_error("Tamaño debe ser un entero mayor a 2");
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+			} while (tamint < 2);
+
             string base;
-            cout << "Ingrese la base numerica a usar en el ordenamiento: ";
-            getline(cin, base);
-            int baseint = stoi(base);
-            if (baseint < 2 || isalpha(baseint)) {
-                throw runtime_error("Base debe ser un entero mayor o igual a 2");
-            }
+            int baseint;
+            do {
+                cout << "Ingrese la base numerica a usar en el ordenamiento: " << endl;
+                getline(cin, base);
+                baseint = stoi(base);
+                if (baseint < 2) {
+                    throw runtime_error("Base debe ser un entero mayor o igual a 2");
+                }
+			} while (baseint < 2);
             LinkedList<int>* lista = new LinkedList<int>();
             for (int i = 0; i < tamint; i++) {
                 int num = rand() % 9999;
