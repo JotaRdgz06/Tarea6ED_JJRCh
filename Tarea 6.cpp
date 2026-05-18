@@ -45,6 +45,20 @@ int main() {
     }
 }
 
+int obtenerMax(LinkedList<int>* lista) {
+    lista->goToStart();
+    int maximo = lista->getElement();
+    lista->next();
+    while (!lista->atEnd()) {
+        int actual = lista->getElement();
+        if (actual > maximo) {
+            maximo = actual;
+        }
+        lista->next();
+
+        return maximo;
+    }
+
 void radixSort(List<int>* lista, int base) {
 
 }
