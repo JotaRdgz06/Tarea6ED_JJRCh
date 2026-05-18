@@ -45,7 +45,7 @@ int main() {
     }
 }
 
-int obtenerMax(LinkedList<int>* lista) {
+int obtenerMayor(LinkedList<int>* lista) {
     lista->goToStart();
     int maximo = lista->getElement();
     lista->next();
@@ -55,10 +55,28 @@ int obtenerMax(LinkedList<int>* lista) {
             maximo = actual;
         }
         lista->next();
-
-        return maximo;
     }
+    return maximo;
+}
 
-void radixSort(List<int>* lista, int base) {
+int obtenerDigito(int numero, int base, int divisor) {
+    for (int i = 0; i < divisor; i++) {
+		divisor *= base;
+    }
+	return (numero / divisor) % base;
+}
 
+void radixSort(LinkedList<int>* lista, int base) {
+    int mayor = obtenerMayor(lista);
+	LinkedList<int>** baldes = new LinkedList<int>*[base];
+	for (int i = 0; i < base; i++) {
+        baldes[i] = new LinkedList<int>();
+	}
+
+    int posicion = 0;
+	int divisor = 1;
+    while (divisor <= mayor) {
+
+    }
+        
 }
