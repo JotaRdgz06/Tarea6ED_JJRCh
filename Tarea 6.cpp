@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <ctime>
 #include <cstdlib>
+#include <chrono>
 #include "LinkedList.h"
 #include "List.h"
 
@@ -19,6 +20,14 @@ int obtenerMayor(LinkedList<int>* lista);
 int obtenerDigito(int numero, int base, int divisor);
 void radixSort(LinkedList<int>* lista, int base);
 
+bool esNumero(string& tam) {
+    for (char c : tam) {
+        if (!isdigit(c))
+            return false;
+    }
+    return true;
+}
+
 int main() {
     srand(time(0));
     setlocale(LC_ALL, "es_ES.UTF-8");
@@ -30,24 +39,23 @@ int main() {
             do {
                 cout << "Ingrese el tamaño de la lista a ordenar: ";
                 getline(cin, tam);
-                tamint = stoi(tam);
-                if (tamint < 2) {
-                    throw runtime_error("Tamaño debe ser un entero mayor a 2");
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (!esNumero(tam) || stoi(tam) < 2) {
+                    throw runtime_error("tamaño debe ser un entero mayor o igual a 2");
                 }
-			} while (tamint < 2);
+                tamint = stoi(tam);
+			} while (stoi(tam) < 2 || !esNumero(tam));
 
             string base;
             int baseint;
             do {
                 cout << "Ingrese la base numerica a usar en el ordenamiento: " << endl;
                 getline(cin, base);
-                baseint = stoi(base);
-                if (baseint < 2) {
+                if (!esNumero(base) || stoi(base) < 2) {
                     throw runtime_error("Base debe ser un entero mayor o igual a 2");
                 }
-			} while (baseint < 2);
+                baseint = stoi(base);
+			} while (stoi(base) < 2 || !esNumero(base));
+            auto inicio = std::chrono::high_resolution_clock::now();
             LinkedList<int>* lista = new LinkedList<int>();
             for (int i = 0; i < tamint; i++) {
                 int num = rand() % 9999;
@@ -57,6 +65,11 @@ int main() {
 			lista->print();
             cout << endl;
 			radixSort(lista, baseint);
+            auto fin = std::chrono::high_resolution_clock::now();
+            auto duracion = std::chrono::duration_cast<std::chrono::milliseconds>(fin - inicio).count();
+            cout << endl;
+            cout << "Tiempo de ejecución: " << duracion << " ms" << endl;
+
 
             cout << endl;
 			cout << "Desea continuar? (s/n): ";
