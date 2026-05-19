@@ -48,7 +48,7 @@ int main() {
             string base;
             int baseint;
             do {
-                cout << "Ingrese la base numerica a usar en el ordenamiento: " << endl;
+                cout << "Ingrese la base numerica a usar en el ordenamiento: ";
                 getline(cin, base);
                 if (!esNumero(base) || stoi(base) < 2) {
                     throw runtime_error("Base debe ser un entero mayor o igual a 2");
